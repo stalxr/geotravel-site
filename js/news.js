@@ -115,6 +115,10 @@ function initPagination() {
     pageNumbers.forEach((pageNumber, index) => {
         pageNumber.addEventListener('click', function() {
             const page = index + 1;
+            if (page > totalPages) {
+                showNoMorePagesMessage();
+                return;
+            }
             showPage(page, newsItems, itemsPerPage);
             updatePagination(page, totalPages);
         });
@@ -175,9 +179,11 @@ function updatePagination(currentPage, totalPages) {
         
         // Скрываем номера страниц, которые не нужны
         if (page > totalPages) {
-            pageNumber.style.display = 'none';
+            pageNumber.classList.add('disabled');
+            pageNumber.setAttribute('aria-disabled', 'true');
         } else {
-            pageNumber.style.display = 'flex';
+            pageNumber.classList.remove('disabled');
+            pageNumber.removeAttribute('aria-disabled');
         }
     });
     
@@ -188,6 +194,21 @@ function updatePagination(currentPage, totalPages) {
     
     if (nextBtn) {
         nextBtn.disabled = currentPage === totalPages;
+    }
+}
+
+function showNoMorePagesMessage() {
+    let el = document.getElementById('noMoreNews');
+    if (!el) {
+        el = document.createElement('div');
+        el.id = 'noMoreNews';
+        el.style.margin = '20px 0';
+        el.style.textAlign = 'center';
+        el.style.color = '#666';
+        el.textContent = 'Больше новостей нет';
+        const container = document.querySelector('.news-list .container') || document.getElementById('newsGrid')?.parentElement;
+        (container || document.body).appendChild(el);
+        setTimeout(()=>{ if(el) el.remove(); }, 2000);
     }
 }
 
