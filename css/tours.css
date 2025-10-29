@@ -189,6 +189,23 @@
     margin-top: 8px;
 }
 
+/* Place favorite button on its own row below primary actions */
+.tour-card .card-actions .favorite-btn {
+    width: 100%;
+    justify-content: center;
+    margin-top: 6px;
+}
+
+/* Ровный вертикальный зазор между рядами кнопок во всех карточках */
+.tour-card .card-actions .favorite-btn {
+    margin-top: 6px;
+}
+
+/* Увеличенный отступ для Европы (id=3) почти до низа верхних кнопок */
+.tour-card[data-id="3"] .card-actions .favorite-btn {
+    margin-top: 18px !important;
+}
+
 .tour-card .favorite-btn {
     display: inline-flex;
     align-items: center;
