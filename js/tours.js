@@ -17,11 +17,6 @@ function initFilters() {
     
     if (!filterForm) return;
     
-    // Обработка изменения фильтров
-    filterForm.addEventListener('change', function() {
-        filterTours();
-    });
-    
     // Обработка отправки формы фильтров
     filterForm.addEventListener('submit', function(e) {
         e.preventDefault();
@@ -136,10 +131,7 @@ function initSearchFormFilters() {
         runFilter();
     });
 
-    [destinationSelect, nightsSelect, dateInput].forEach(el => {
-        if (!el) return;
-        el.addEventListener('change', runFilter);
-    });
+    // Применяем только по кнопке (submit)
 }
 
 // Извлечение цены из текста
