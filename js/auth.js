@@ -37,6 +37,51 @@ document.addEventListener('DOMContentLoaded', function() {
   if (favoritesContainer) {
     renderFavoritesList(favoritesContainer);
   }
+
+  // Profile modal handlers
+  const openBtn = document.getElementById('openProfileBtn');
+  const modal = document.getElementById('profileModal');
+  const closeBtn = document.getElementById('closeProfileBtn');
+  const clearBtn = document.getElementById('clearProfileBtn');
+  const form = document.getElementById('profileForm');
+  if (openBtn && modal) {
+    openBtn.addEventListener('click', function(){
+      modal.style.display = 'block';
+      loadProfileIntoForm();
+    });
+  }
+  if (closeBtn && modal) {
+    closeBtn.addEventListener('click', function(){ modal.style.display = 'none'; });
+    modal.addEventListener('click', function(e){ if (e.target === modal) modal.style.display = 'none'; });
+  }
+  if (clearBtn) {
+    clearBtn.addEventListener('click', function(){
+      const user = localStorage.getItem('gt_current_user');
+      if (!user) return;
+      localStorage.removeItem(`gt_profile_${user}`);
+      try { travelAgency.showNotification('Профиль очищен', 'info'); } catch(_){}
+      loadProfileIntoForm();
+    });
+  }
+  if (form) {
+    form.addEventListener('submit', function(e){
+      e.preventDefault();
+      const user = localStorage.getItem('gt_current_user');
+      if (!user) return;
+      const profile = {
+        lastName: document.getElementById('pLastName')?.value || '',
+        firstName: document.getElementById('pFirstName')?.value || '',
+        middleName: document.getElementById('pMiddleName')?.value || '',
+        birthDate: document.getElementById('pBirthDate')?.value || '',
+        passport: document.getElementById('pPassport')?.value || '',
+        phone: document.getElementById('pPhone')?.value || '',
+        email: document.getElementById('pEmail')?.value || ''
+      };
+      localStorage.setItem(`gt_profile_${user}`, JSON.stringify(profile));
+      try { travelAgency.showNotification('Профиль сохранён. Автозаполнение включено.', 'success'); } catch(_){}
+      modal.style.display = 'none';
+    });
+  }
 });
 
 function initAuthHeader() {
@@ -113,6 +158,29 @@ function getTourCatalog() {
     '7': { title: 'Карловы Вары, Чехия - 10 дней', badge: 'Лечебно-оздоровительный', price: '75 000 ₽', image: 'https://upload.wikimedia.org/wikipedia/commons/d/d8/Karlovy_Vary_Czech.jpg', description: 'Лечение, процедуры, экскурсии' },
     '8': { title: 'Мертвое море, Израиль - 7 дней', badge: 'Лечебно-оздоровительный', price: '58 000 ₽', image: 'https://avatars.mds.yandex.net/i?id=c51ac7a529be4887f5820b121edb11c9_l-4283547-images-thumbs&n=13', description: '7 дней, спа-процедуры' }
   };
+}
+
+function loadProfileIntoForm() {
+  const user = localStorage.getItem('gt_current_user');
+  if (!user) return;
+  const raw = localStorage.getItem(`gt_profile_${user}`);
+  if (!raw) {
+    ['pLastName','pFirstName','pMiddleName','pBirthDate','pPassport','pPhone','pEmail'].forEach(id=>{
+      const el = document.getElementById(id); if (el) el.value = '';
+    });
+    return;
+  }
+  const p = JSON.parse(raw);
+  const map = {
+    pLastName: p.lastName,
+    pFirstName: p.firstName,
+    pMiddleName: p.middleName,
+    pBirthDate: p.birthDate,
+    pPassport: p.passport,
+    pPhone: p.phone,
+    pEmail: p.email
+  };
+  Object.keys(map).forEach(id=>{ const el = document.getElementById(id); if (el) el.value = map[id] || ''; });
 }
 
 

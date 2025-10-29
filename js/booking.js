@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 function initBookingPage() {
     prefillFromParams();
+    try { prefillFromProfile(); } catch(_) {}
     initBookingForm();
     initPriceCalculation();
     initParticipantManagement();
@@ -220,6 +221,26 @@ function prefillFromParams() {
         const p = parseInt(price, 10);
         if (!isNaN(p)) totalPriceEl.textContent = p.toLocaleString('ru-RU') + ' ₽';
     }
+}
+
+// Prefill from saved profile (account)
+function prefillFromProfile() {
+    let user = null;
+    try { user = localStorage.getItem('gt_current_user'); } catch(_) {}
+    if (!user) return;
+    let raw = null;
+    try { raw = localStorage.getItem(`gt_profile_${user}`); } catch(_) {}
+    if (!raw) return;
+    const p = JSON.parse(raw);
+    const set = (id, val) => { const el = document.getElementById(id); if (el && !el.value) el.value = val || ''; };
+    set('firstName', p.firstName);
+    set('lastName', p.lastName);
+    set('middleName', p.middleName);
+    set('birthDate', p.birthDate);
+    set('phone', p.phone);
+    set('email', p.email);
+    // also mirror to main participant if present
+    autoFillMainParticipant();
 }
 
 // Инициализация управления участниками
