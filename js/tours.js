@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 function initToursPage() {
     initFilters();
+    initSearchFormFilters();
     initTourCards();
 }
 
@@ -54,6 +55,91 @@ function initFilters() {
             }
         });
     }
+}
+
+// Фильтрация по форме в секции поиска (Куда/Ночей/Дата)
+function initSearchFormFilters() {
+    const form = document.querySelector('.tour-search-form');
+    const destinationSelect = document.getElementById('destination');
+    const nightsSelect = document.getElementById('nights');
+    const dateInput = document.getElementById('date');
+
+    if (!form) return;
+
+    function parseNightsFromCard(card) {
+        // Ищем число ночей в блоках деталей или описании
+        const details = Array.from(card.querySelectorAll('.detail-item span'))
+            .map(el => el.textContent.toLowerCase());
+        const desc = (card.querySelector('.card-text')?.textContent || '').toLowerCase();
+        const allTexts = details.concat([desc]);
+        let nights = null;
+        for (const t of allTexts) {
+            const m = t.match(/(\d{1,2})\s*ноч/i);
+            if (m) { nights = parseInt(m[1], 10); break; }
+        }
+        return Number.isFinite(nights) ? nights : null;
+    }
+
+    function matchNights(nights, rangeValue) {
+        if (!rangeValue || !nights) return true;
+        switch (rangeValue) {
+            case '3-5':
+                return nights >= 3 && nights <= 5;
+            case '6-8':
+                return nights >= 6 && nights <= 8;
+            case '9-14':
+                return nights >= 9 && nights <= 14;
+            case '15+':
+                return nights >= 15;
+            default:
+                return true;
+        }
+    }
+
+    function matchDestination(card, destValue) {
+        if (!destValue) return true;
+        const title = (card.querySelector('.card-title')?.textContent || '').toLowerCase();
+        const map = {
+            'turkey': ['турция', 'анталия', 'стамбул'],
+            'egypt': ['египет', 'хургада', 'шарм'],
+            'thailand': ['тайланд', 'пхукет', 'самуи', 'бангкок'],
+            'europe': ['европа', 'париж', 'рим', 'берлин', 'прага']
+        };
+        const keywords = map[destValue] || [];
+        return keywords.some(k => title.includes(k));
+    }
+
+    function runFilter() {
+        const destVal = destinationSelect ? destinationSelect.value : '';
+        const nightsVal = nightsSelect ? nightsSelect.value : '';
+        // Дата в статическом каталоге не фильтрует, игнорируем
+
+        const cards = document.querySelectorAll('.tour-card');
+        let anyShown = false;
+        cards.forEach(card => {
+            const nights = parseNightsFromCard(card);
+            const okDest = matchDestination(card, destVal);
+            const okNights = matchNights(nights, nightsVal);
+            const show = okDest && okNights;
+            card.style.display = show ? 'block' : 'none';
+            if (show) anyShown = true;
+        });
+
+        // Если все скрыты — можно показать уведомление
+        if (!anyShown) {
+            try { travelAgency.showNotification('По заданным условиям туры не найдены', 'info'); } catch(_) {}
+        }
+    }
+
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        runFilter();
+    });
+
+    [destinationSelect, nightsSelect, dateInput].forEach(el => {
+        if (!el) return;
+        el.addEventListener('change', runFilter);
+    });
 }
 
 // Извлечение цены из текста
