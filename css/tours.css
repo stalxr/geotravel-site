@@ -178,6 +178,39 @@
     padding: 25px;
 }
 
+/* Actions row under price */
+.tour-card .card-actions {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-top: 8px;
+}
+
+.tour-card .favorite-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    border: 2px solid #e74c3c;
+    color: #e74c3c;
+    padding: 10px 14px;
+    border-radius: 999px;
+    font-weight: 600;
+    transition: all .2s ease;
+    text-decoration: none;
+}
+
+.tour-card .favorite-btn:hover {
+    background: #e74c3c;
+    color: #fff;
+}
+
+.tour-card .favorite-btn.favorited {
+    background: #e74c3c;
+    color: #fff;
+    border-color: #e74c3c;
+}
+
 .tour-badge {
     display: inline-block;
     background: linear-gradient(135deg, #ff6b35, #f7931e);

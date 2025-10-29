@@ -84,25 +84,92 @@ function initTourCards() {
         if (favoriteBtn) {
             favoriteBtn.addEventListener('click', function(e) {
                 e.preventDefault();
-                toggleFavorite(this);
+                toggleFavorite(this, card);
+            });
+        }
+
+        // Кнопка Забронировать: пробрасываем корректные параметры в booking.html
+        const bookBtn = card.querySelector('.book-btn');
+        if (bookBtn) {
+            bookBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                const title = card.querySelector('.card-title')?.textContent.trim() || '';
+                const priceText = card.querySelector('.card-price')?.textContent || '';
+                const price = (priceText.match(/[\d\s]+/)?.[0] || '').replace(/\s/g, '');
+                const image = card.querySelector('.card-img')?.src || '';
+                const category = card.querySelector('.tour-badge')?.textContent.trim() || '';
+                const params = new URLSearchParams();
+                if (title) params.set('title', title);
+                if (price) params.set('price', price);
+                if (image) params.set('image', image);
+                if (category) params.set('category', category);
+                params.set('adults', '2');
+                params.set('children', '0');
+                window.location.href = `booking.html?${params.toString()}`;
             });
         }
     });
+
+    // Проставляем состояние избранного из localStorage
+    applyFavoritesState();
 }
 
 // Переключение избранного
-function toggleFavorite(button) {
-    const isFavorite = button.classList.contains('favorited');
-    
-    if (isFavorite) {
+function toggleFavorite(button, cardEl) {
+    const user = getCurrentUser();
+    if (!user) {
+        travelAgency.showNotification('Войдите, чтобы использовать избранное', 'info');
+        window.location.href = '../pages/login.html';
+        return;
+    }
+
+    const tourId = cardEl?.getAttribute('data-id') || cardEl?.querySelector('a.btn')?.href || cardEl?.querySelector('.card-title')?.textContent;
+    if (!tourId) return;
+
+    const favorites = getFavorites(user);
+    const idx = favorites.indexOf(tourId);
+    if (idx >= 0) {
+        favorites.splice(idx, 1);
         button.classList.remove('favorited');
         button.innerHTML = '<i class="icon-heart-empty"></i> В избранное';
         travelAgency.showNotification('Тур удален из избранного', 'info');
     } else {
+        favorites.push(tourId);
         button.classList.add('favorited');
         button.innerHTML = '<i class="icon-heart-filled"></i> В избранном';
         travelAgency.showNotification('Тур добавлен в избранное', 'success');
     }
+    setFavorites(user, favorites);
+}
+
+function applyFavoritesState() {
+    const user = getCurrentUser();
+    if (!user) return;
+    const favorites = getFavorites(user);
+    document.querySelectorAll('.tour-card').forEach(card => {
+        const tourId = card.getAttribute('data-id') || card.querySelector('a.btn')?.href || card.querySelector('.card-title')?.textContent;
+        const btn = card.querySelector('.favorite-btn');
+        if (!btn || !tourId) return;
+        if (favorites.includes(tourId)) {
+            btn.classList.add('favorited');
+            btn.innerHTML = '<i class="icon-heart-filled"></i> В избранном';
+        }
+    });
+}
+
+function getCurrentUser() {
+    try { return localStorage.getItem('gt_current_user') || null; } catch(e) { return null; }
+}
+
+function getFavorites(user) {
+    try {
+        const raw = localStorage.getItem(`gt_favorites_${user}`);
+        return raw ? JSON.parse(raw) : [];
+    } catch (e) { return []; }
+}
+
+function setFavorites(user, arr) {
+    try { localStorage.setItem(`gt_favorites_${user}`, JSON.stringify(arr)); } catch(e) {}
 }
 
 // Сортировка туров

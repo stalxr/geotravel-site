@@ -2,6 +2,7 @@
 
 document.addEventListener('DOMContentLoaded', function() {
     initTourDetailsPage();
+    try { applyTourFromQuery(); } catch(_) {}
 });
 
 function initTourDetailsPage() {
@@ -9,6 +10,73 @@ function initTourDetailsPage() {
     initTabs();
     initBooking();
     initReviews();
+}
+
+// Apply dynamic content by id from query
+function applyTourFromQuery() {
+    const params = new URLSearchParams(window.location.search);
+    const id = params.get('id');
+    if (!id) return;
+    const map = {
+        '1': {
+            title: 'Анталия, Турция - 7 ночей',
+            badge: 'Пляжный отдых',
+            price: '35 000 ₽',
+            image: 'https://i.pinimg.com/originals/78/ca/35/78ca357fc5263ad3392717c74a30e9ac.jpg'
+        },
+        '2': {
+            title: 'Хургада, Египет - 10 ночей',
+            badge: 'Пляжный отдых',
+            price: '42 000 ₽',
+            image: 'https://avatars.mds.yandex.net/i?id=2885796b56e1516b0bd04ab00912082e_l-8375627-images-thumbs&n=13'
+        },
+        '3': {
+            title: 'Европа: 5 столиц - 10 дней',
+            badge: 'Экскурсионный',
+            price: '55 000 ₽',
+            image: 'https://sun9-40.userapi.com/c604525/v604525628/5a3fa/DFi66xcuVuc.jpg'
+        },
+        '4': {
+            title: 'Стамбул - 5 дней',
+            badge: 'Экскурсионный',
+            price: '28 000 ₽',
+            image: 'https://inbusiness.kz/uploads/2025-6/v02IfVym.jpg'
+        },
+        '5': {
+            title: 'Тайланд: острова и джунгли - 12 дней',
+            badge: 'Приключенческий',
+            price: '65 000 ₽',
+            image: 'https://avatars.mds.yandex.net/i?id=23f68c52c2180ceae08be4c3aa58601c_l-5482778-images-thumbs&n=13'
+        },
+        '6': {
+            title: 'ОАЭ: пустыня и небоскребы - 8 дней',
+            badge: 'Приключенческий',
+            price: '48 000 ₽',
+            image: 'https://cdn.fishki.net/upload/post/201401/27/1240358/394645.jpg'
+        },
+        '7': {
+            title: 'Карловы Вары, Чехия - 10 дней',
+            badge: 'Лечебно-оздоровительный',
+            price: '75 000 ₽',
+            image: 'https://upload.wikimedia.org/wikipedia/commons/d/d8/Karlovy_Vary_Czech.jpg'
+        },
+        '8': {
+            title: 'Мертвое море, Израиль - 7 дней',
+            badge: 'Лечебно-оздоровительный',
+            price: '58 000 ₽',
+            image: 'https://avatars.mds.yandex.net/i?id=c51ac7a529be4887f5820b121edb11c9_l-4283547-images-thumbs&n=13'
+        }
+    };
+    const data = map[id];
+    if (!data) return;
+    const titleEl = document.querySelector('.tour-info h1');
+    const badgeEl = document.querySelector('.tour-badge');
+    const priceEl = document.querySelector('.tour-price .price-main');
+    const mainImage = document.getElementById('mainImage');
+    if (titleEl) titleEl.textContent = data.title;
+    if (badgeEl) badgeEl.textContent = data.badge;
+    if (priceEl) priceEl.textContent = 'от ' + data.price;
+    if (mainImage) mainImage.src = data.image;
 }
 
 // Инициализация галереи

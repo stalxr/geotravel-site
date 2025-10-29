@@ -90,9 +90,12 @@
     gap: 10px;
 }
 
-.header-actions .btn {
-    padding: 8px 16px;
+.header-actions .btn,
+.header-actions .btn.btn-outline {
+    padding: 10px 18px;
     font-size: 14px;
+    line-height: 1.2;
+    font-weight: 600;
 }
 
 .phone-link {

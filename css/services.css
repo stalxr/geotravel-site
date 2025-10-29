@@ -61,8 +61,8 @@
 }
 
 .service-icon {
-    width: 80px;
-    height: 80px;
+    width: 96px;
+    height: 96px;
     background: linear-gradient(135deg, #ff6b35, #f7931e);
     border-radius: 50%;
     display: flex;
@@ -70,6 +70,8 @@
     justify-content: center;
     margin: 0 auto 25px;
     color: white;
+    font-size: 40px; /* emoji size */
+    animation: float 6s ease-in-out infinite;
 }
 
 .service-icon i {
@@ -138,8 +140,8 @@
 }
 
 .additional-icon {
-    width: 60px;
-    height: 60px;
+    width: 72px;
+    height: 72px;
     background: linear-gradient(135deg, #3498db, #2980b9);
     border-radius: 50%;
     display: flex;
@@ -147,6 +149,14 @@
     justify-content: center;
     color: white;
     flex-shrink: 0;
+    font-size: 34px; /* emoji size */
+    animation: float 7s ease-in-out infinite;
+}
+
+@keyframes float {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+  100% { transform: translateY(0); }
 }
 
 .additional-icon i {

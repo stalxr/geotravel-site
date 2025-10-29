@@ -4,6 +4,7 @@
 document.addEventListener('DOMContentLoaded', function() {
     loadHeader();
     loadFooter();
+    try { initAuthHeader(); } catch(_) {}
 });
 
 // Загрузка header
@@ -28,6 +29,7 @@ function loadHeader() {
                     if (logoImg) logoImg.setAttribute('src', base + 'images/logo.png');
                 } catch (_) {}
                 initMobileMenu();
+                try { initAuthHeader(); } catch(_) {}
             })
             .catch(error => console.error('Ошибка загрузки header:', error));
     }
@@ -48,6 +50,38 @@ function loadFooter() {
             })
             .catch(error => console.error('Ошибка загрузки footer:', error));
     }
+}
+
+// Минимальная реализация initAuthHeader без зависимости от auth.js
+function initAuthHeader() {
+    const isInPagesFolderNow = window.location.pathname.includes('/pages/');
+    const base = isInPagesFolderNow ? '../pages/' : 'pages/';
+    const headerRoot = document.getElementById('header');
+    if (!headerRoot) return;
+    const actions = headerRoot.querySelector('.header-actions');
+    const mobileContact = headerRoot.querySelector('.mobile-contact');
+    if (!actions && !mobileContact) return;
+
+    let currentUser = null;
+    try { currentUser = localStorage.getItem('gt_current_user'); } catch (_) {}
+
+    const setActions = (container) => {
+        if (!container) return;
+        container.innerHTML = '';
+        if (currentUser) {
+            const acc = document.createElement('a'); acc.className = 'btn btn-outline'; acc.href = base + 'account.html'; acc.textContent = 'Личный кабинет';
+            const logout = document.createElement('a'); logout.className = 'btn'; logout.href = '#'; logout.textContent = 'Выйти';
+            logout.addEventListener('click', function(e){ e.preventDefault(); try { localStorage.removeItem('gt_current_user'); } catch(_){} window.location.reload(); });
+            container.appendChild(acc); container.appendChild(logout);
+        } else {
+            const login = document.createElement('a'); login.className = 'btn btn-primary'; login.href = base + 'login.html'; login.textContent = 'Войти';
+            const reg = document.createElement('a'); reg.className = 'btn btn-outline'; reg.href = base + 'register.html'; reg.textContent = 'Регистрация';
+            container.appendChild(login); container.appendChild(reg);
+        }
+    };
+
+    setActions(actions);
+    setActions(mobileContact);
 }
 
 
@@ -138,6 +172,8 @@ function initForms() {
     const forms = document.querySelectorAll('form');
     
     forms.forEach(form => {
+        // Skip globally handled forms (e.g., auth)
+        if (form.matches('[data-skip-global="true"]')) return;
         form.addEventListener('submit', function(e) {
             e.preventDefault();
             handleFormSubmit(this);
