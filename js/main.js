@@ -47,6 +47,26 @@ function loadFooter() {
             .then(response => response.text())
             .then(data => {
                 footerContainer.innerHTML = data;
+                try {
+                    const isInPagesFolderNow = window.location.pathname.includes('/pages/');
+                    const base = isInPagesFolderNow ? '../' : '';
+                    // Нормализуем ссылки футера на страницы
+                    const footerRoot = footerContainer.querySelector('.footer');
+                    if (footerRoot) {
+                        const anchors = footerRoot.querySelectorAll('a[href]');
+                        anchors.forEach(a => {
+                            const href = a.getAttribute('href');
+                            if (!href) return;
+                            // Если ссылка уже абсолютная или якорь — пропускаем
+                            if (/^https?:\/\//.test(href) || href.startsWith('#')) return;
+                            // Приводим ссылки к pages/* относительно текущего уровня
+                            const cleaned = href.replace(/^\.\.\//, '');
+                            if (cleaned.startsWith('pages/')) {
+                                a.setAttribute('href', base + cleaned);
+                            }
+                        });
+                    }
+                } catch (_) {}
             })
             .catch(error => console.error('Ошибка загрузки footer:', error));
     }
