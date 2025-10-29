@@ -34,6 +34,41 @@
     color: white;
     padding: 60px 0;
     border-bottom: 1px solid #e9ecef;
+    position: relative;
+    z-index: 1;
+}
+
+/* Убеждаемся, что header на этой странице имеет правильный фон */
+body .header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+}
+
+/* Убираем белые круги с иконок в header */
+body .header .header-actions .btn,
+body .header .mobile-menu-toggle span {
+    background: transparent;
+}
+
+body .header .header-actions .btn {
+    background: rgba(255, 255, 255, 0.2);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    color: white;
+}
+
+body .header .header-actions .btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+    border-color: rgba(255, 255, 255, 0.5);
+}
+
+body .header .header-actions .btn.btn-primary {
+    background: rgba(255, 255, 255, 0.25);
+    border-color: rgba(255, 255, 255, 0.4);
+}
+
+body .header .header-actions .btn.btn-primary:hover {
+    background: rgba(255, 255, 255, 0.35);
+    border-color: rgba(255, 255, 255, 0.6);
 }
 
 .news-meta {
@@ -449,12 +484,14 @@
     color: #666;
     text-decoration: none;
     border-radius: 25px;
+    border: 2px solid #e1e8ed;
     transition: all 0.3s ease;
 }
 
 .nav-link:hover {
     background: #ff6b35;
     color: white;
+    border-color: #ff6b35;
 }
 
 .nav-link i {
