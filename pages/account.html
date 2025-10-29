@@ -7,15 +7,24 @@
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../css/header.css">
     <link rel="stylesheet" href="../css/footer.css">
+    <link rel="stylesheet" href="../css/tours.css">
 </head>
 <body>
     <div id="header"></div>
     <section class="section">
         <div class="container">
-            <h1>Личный кабинет</h1>
-            <p>Пользователь: <span id="accUser"></span></p>
-            <h2>Избранные туры</h2>
-            <div id="favoritesList"></div>
+            <h1 class="section-title">Личный кабинет</h1>
+            <div class="account-header" style="display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:20px">
+                <p style="margin:0;color:#2c3e50">Пользователь: <strong id="accUser"></strong></p>
+                <div>
+                    <a href="../pages/tours.html" class="btn btn-outline">Каталог туров</a>
+                </div>
+            </div>
+
+            <div class="favorites-section" style="background:#f8f9fa;padding:20px;border-radius:12px">
+                <h2 class="section-title" style="margin:0 0 12px 0">Избранные туры</h2>
+                <div id="favoritesList" class="tours-grid"></div>
+            </div>
         </div>
     </section>
     <div id="footer"></div>

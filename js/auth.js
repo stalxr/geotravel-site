@@ -66,12 +66,53 @@ function renderFavoritesList(container) {
   const raw = localStorage.getItem(`gt_favorites_${user}`);
   const list = raw ? JSON.parse(raw) : [];
   if (!list.length) { container.innerHTML = '<p>Избранных туров пока нет.</p>'; return; }
-  const ul = document.createElement('ul');
+
+  const catalog = getTourCatalog();
+  container.innerHTML = '';
   list.forEach(id => {
-    const li = document.createElement('li'); li.textContent = `Тур: ${id}`;
-    ul.appendChild(li);
+    const data = catalog[id];
+    if (!data) return;
+    const card = document.createElement('div');
+    card.className = 'tour-card card';
+    card.setAttribute('data-id', id);
+    card.innerHTML = `
+      <img src="${data.image}" alt="${data.title}" class="card-img">
+      <div class="card-content">
+        <div class="tour-badge">${data.badge}</div>
+        <h3 class="card-title">${data.title}</h3>
+        <p class="card-text">${data.description || ''}</p>
+        <div class="card-price">от ${data.price}</div>
+        <div class="card-actions">
+          <a href="tour-details.html?id=${id}" class="btn">Подробнее</a>
+          <a href="booking.html?title=${encodeURIComponent(data.title)}&price=${encodeURIComponent(data.price.replace(/[^0-9]/g,''))}&image=${encodeURIComponent(data.image)}&category=${encodeURIComponent(data.badge)}&adults=2&children=0" class="btn">Забронировать</a>
+          <a href="#" class="favorite-btn favorited" data-remove="true"><i class="icon-heart-filled"></i> В избранном</a>
+        </div>
+      </div>
+    `;
+    const removeBtn = card.querySelector('[data-remove="true"]');
+    removeBtn.addEventListener('click', function(e){
+      e.preventDefault();
+      const cur = JSON.parse(localStorage.getItem(`gt_favorites_${user}`) || '[]');
+      const idx = cur.indexOf(id);
+      if (idx >= 0) cur.splice(idx,1);
+      localStorage.setItem(`gt_favorites_${user}`, JSON.stringify(cur));
+      renderFavoritesList(container);
+    });
+    container.appendChild(card);
   });
-  container.innerHTML = ''; container.appendChild(ul);
+}
+
+function getTourCatalog() {
+  return {
+    '1': { title: 'Анталия, Турция - 7 ночей', badge: 'Пляжный отдых', price: '35 000 ₽', image: 'https://getmecar.ru/wp-content/uploads/2024/02/11-e1651558649220.jpg', description: '7 ночей, все включено, 5★ отель' },
+    '2': { title: 'Хургада, Египет - 10 ночей', badge: 'Пляжный отдых', price: '42 000 ₽', image: 'https://avatars.mds.yandex.net/i?id=aba51126b020fb3731fecf9fbe56b3fd_l-8168927-images-thumbs&n=13', description: '10 ночей, все включено, 4★ отель' },
+    '3': { title: 'Европа: 5 столиц - 10 дней', badge: 'Экскурсионный', price: '55 000 ₽', image: 'https://sun9-40.userapi.com/c604525/v604525628/5a3fa/DFi66xcuVuc.jpg', description: '10 дней, 5 стран, завтраки' },
+    '4': { title: 'Стамбул - город контрастов', badge: 'Экскурсионный', price: '28 000 ₽', image: 'https://inbusiness.kz/uploads/2025-6/v02IfVym.jpg', description: '5 дней, экскурсии включены' },
+    '5': { title: 'Тайланд: острова и джунгли - 12 дней', badge: 'Приключенческий', price: '65 000 ₽', image: 'https://sun9-85.userapi.com/impf/xGC0HdQyAGxHYmSn37kEBzItLPYfUbN3-uEueA/0I2a3RP_CQM.jpg?size=1920x768&quality=95&crop=0,60,1220,487&sign=e8c48d3696f4621ad6049632cf00851c&type=cover_group', description: '12 дней, активный отдых' },
+    '6': { title: 'ОАЭ: пустыня и небоскребы - 8 дней', badge: 'Приключенческий', price: '48 000 ₽', image: 'https://cdn.fishki.net/upload/post/201401/27/1240358/394645.jpg', description: '8 дней, сафари и шопинг' },
+    '7': { title: 'Карловы Вары, Чехия - 10 дней', badge: 'Лечебно-оздоровительный', price: '75 000 ₽', image: 'https://upload.wikimedia.org/wikipedia/commons/d/d8/Karlovy_Vary_Czech.jpg', description: 'Лечение, процедуры, экскурсии' },
+    '8': { title: 'Мертвое море, Израиль - 7 дней', badge: 'Лечебно-оздоровительный', price: '58 000 ₽', image: 'https://avatars.mds.yandex.net/i?id=c51ac7a529be4887f5820b121edb11c9_l-4283547-images-thumbs&n=13', description: '7 дней, спа-процедуры' }
+  };
 }
 
 
