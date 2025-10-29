@@ -178,7 +178,6 @@
     padding: 25px;
     display: flex;
     flex-direction: column;
-    height: 100%;
 }
 
 /* Actions row under price */
@@ -187,14 +186,14 @@
     gap: 10px;
     align-items: center;
     flex-wrap: wrap;
-    margin-top: auto; /* push actions to bottom for equal baseline */
+    margin-top: 8px;
 }
 
 /* Place favorite button on its own row below primary actions */
 .tour-card .card-actions .favorite-btn {
     width: 100%;
     justify-content: center;
-    margin-top: 12px; /* separate row under primary buttons */
+    margin-top: 22px;
 }
 
 .tour-card .favorite-btn {
