@@ -193,17 +193,7 @@
 .tour-card .card-actions .favorite-btn {
     width: 100%;
     justify-content: center;
-    margin-top: 14px;
-}
-
-/* Ровный вертикальный зазор между рядами кнопок во всех карточках */
-.tour-card .card-actions .favorite-btn {
-    margin-top: 6px;
-}
-
-/* Увеличенный отступ для Европы (id=3) почти до низа верхних кнопок */
-.tour-card[data-id="3"] .card-actions .favorite-btn {
-    margin-top: 18px !important;
+    margin-top: 22px; /* consistently lower on its own row */
 }
 
 .tour-card .favorite-btn {
@@ -252,6 +242,7 @@
     color: #666;
     margin-bottom: 20px;
     line-height: 1.5;
+    min-height: 54px;
 }
 
 .tour-details {
@@ -259,6 +250,7 @@
     flex-wrap: wrap;
     gap: 15px;
     margin-bottom: 16px;
+    min-height: 70px;
 }
 
 .detail-item {
