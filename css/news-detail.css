@@ -488,7 +488,7 @@ body .header .header-actions .btn.btn-outline:hover {
     align-items: center;
 }
 
-.nav-link {
+.news-navigation .nav-link {
     display: flex;
     align-items: center;
     gap: 10px;
@@ -501,13 +501,13 @@ body .header .header-actions .btn.btn-outline:hover {
     transition: all 0.3s ease;
 }
 
-.nav-link:hover {
+.news-navigation .nav-link:hover {
     background: #ff6b35;
     color: white;
     border-color: #ff6b35;
 }
 
-.nav-link i {
+.news-navigation .nav-link i {
     width: 18px;
     height: 18px;
     fill: currentColor;
