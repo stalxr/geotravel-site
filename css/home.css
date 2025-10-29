@@ -102,49 +102,6 @@
     display: none;
 }
 
-.search-section {
-    background: white;
-    padding: 60px 0;
-    margin-top: -30px;
-    position: relative;
-    z-index: 10;
-    border-radius: 20px 20px 0 0;
-    box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.1);
-}
-
-.search-form {
-    background: #ffffff;
-    padding: 40px;
-    border-radius: 16px;
-    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.12);
-}
-
-.search-form h2 {
-    text-align: center;
-    margin-bottom: 32px;
-    color: #2c3e50;
-    font-weight: 700;
-}
-
-.tour-search-form .form-row {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 20px;
-    align-items: end;
-}
-
-.tour-search-form .form-group {
-    margin-bottom: 0;
-}
-
-
-.tour-search-form label {
-    font-weight: 600;
-    color: #2c3e50;
-    margin-bottom: 8px;
-    display: block;
-}
-
 
 .popular-destinations {
     background: white;
