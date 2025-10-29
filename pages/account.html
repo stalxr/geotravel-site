@@ -21,13 +21,13 @@
     <section class="section">
         <div class="container">
             <h1 class="section-title">Личный кабинет</h1>
-            <div class="account-header" style="display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:20px">
+            <div class="account-header" style="display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:20px">
                 <p style="margin:0;color:#2c3e50">Пользователь: <strong id="accUser"></strong></p>
-                <div>
+                <div style="display:flex;flex-direction:column;align-items:flex-start;gap:12px">
                     <a href="../pages/tours.html" class="btn btn-primary btn-equal">Каталог туров</a>
-                    <span class="profile-btn-wrap btn-gap">
-                      <button id="openProfileBtn" class="btn btn-primary btn-equal">Заполнить профиль</button>
-                      <div id="profileTooltip" class="profile-tooltip">Эта кнопка открывает форму профиля: ФИО, паспорт, дата рождения и контакты — для автоматического заполнения при бронировании.</div>
+                    <span class="profile-btn-wrap">
+                      <button id="openProfileBtn" class="btn btn-outline btn-equal">Заполнить профиль</button>
+                      <div id="profileTooltip" class="profile-tooltip" style="margin-top:10px">Эта кнопка открывает форму профиля: ФИО, паспорт, дата рождения и контакты — для автоматического заполнения при бронировании.</div>
                     </span>
                 </div>
             </div>
@@ -38,6 +38,10 @@
                 <h2 class="section-title" style="margin:0 0 12px 0">Избранные туры</h2>
                 <div id="favoritesList" class="tours-grid"></div>
             </div>
+            <div style="margin-top:20px;display:flex;gap:12px;flex-wrap:wrap">
+                <a href="../pages/booking.html" class="btn btn-primary">Перейти к бронированию</a>
+                <a href="../pages/tours.html" class="btn btn-outline">Выбрать тур</a>
+            </div>
         </div>
     </section>
 
@@ -46,7 +50,7 @@
       <div class="modal-content" style="background:#fff;max-width:560px;margin:60px auto;padding:24px 24px 28px;border-radius:16px;position:relative;box-shadow:0 20px 40px rgba(0,0,0,.2)">
         <button id="closeProfileBtn" aria-label="Закрыть" style="position:absolute;right:14px;top:14px;width:36px;height:36px;border:none;border-radius:50%;background:linear-gradient(135deg,#667eea,#764ba2);color:#fff;font-size:20px;line-height:36px;text-align:center;cursor:pointer;box-shadow:0 6px 14px rgba(0,0,0,.15);transition:transform .15s ease, opacity .15s ease">×</button>
         <h2 style="margin-top:0;color:#2c3e50">Профиль для авто‑заполнения</h2>
-        <form id="profileForm">
+        <form id="profileForm" data-skip-global="true">
           <div class="form-row" style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
             <div class="form-group"><label>Фамилия</label><input id="pLastName" class="form-input"></div>
             <div class="form-group"><label>Имя</label><input id="pFirstName" class="form-input"></div>
