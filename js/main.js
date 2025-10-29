@@ -53,6 +53,12 @@ function adjustHeaderLinks() {
         links.forEach(link => {
             link.href = link.href.replace('../', '');
         });
+        
+        // Корректируем пути к изображениям
+        const images = document.querySelectorAll('#header img[src^="../"]');
+        images.forEach(img => {
+            img.src = img.src.replace('../', '');
+        });
     }
 }
 
