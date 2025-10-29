@@ -12,14 +12,12 @@ function loadHeader() {
     if (headerContainer) {
         // Определяем правильный путь к header в зависимости от текущей страницы
         const isInPagesFolder = window.location.pathname.includes('/pages/');
-        const headerPath = isInPagesFolder ? '../components/header.html' : 'components/header.html';
+        const headerPath = isInPagesFolder ? '../components/header.html' : 'components/header-main.html';
         
         fetch(headerPath)
             .then(response => response.text())
             .then(data => {
                 headerContainer.innerHTML = data;
-                // Корректируем ссылки в зависимости от текущей страницы
-                adjustHeaderLinks();
                 initMobileMenu();
             })
             .catch(error => console.error('Ошибка загрузки header:', error));
@@ -43,36 +41,6 @@ function loadFooter() {
     }
 }
 
-// Корректировка ссылок в header в зависимости от текущей страницы
-function adjustHeaderLinks() {
-    // Проверяем, не была ли функция уже вызвана
-    if (document.querySelector('#header').dataset.adjusted === 'true') {
-        return;
-    }
-    
-    const isInPagesFolder = window.location.pathname.includes('/pages/');
-    
-    if (!isInPagesFolder) {
-        // Если мы на главной странице, убираем ../ из всех ссылок
-        const links = document.querySelectorAll('#header a[href^="../"]');
-        links.forEach(link => {
-            if (link.href.includes('../')) {
-                link.href = link.href.replace('../', '');
-            }
-        });
-        
-        // Корректируем пути к изображениям
-        const images = document.querySelectorAll('#header img[src^="../"]');
-        images.forEach(img => {
-            if (img.src.includes('../')) {
-                img.src = img.src.replace('../', '');
-            }
-        });
-    }
-    
-    // Помечаем, что функция уже была вызвана
-    document.querySelector('#header').dataset.adjusted = 'true';
-}
 
 // Мобильное меню
 function initMobileMenu() {
