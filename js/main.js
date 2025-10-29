@@ -18,6 +18,15 @@ function loadHeader() {
             .then(response => response.text())
             .then(data => {
                 headerContainer.innerHTML = data;
+                // Normalize logo link and image so they work from any page (root or /pages)
+                try {
+                    const isInPagesFolderNow = window.location.pathname.includes('/pages/');
+                    const base = isInPagesFolderNow ? '../' : '';
+                    const logoLink = document.querySelector('#header .logo a');
+                    const logoImg = document.querySelector('#header .logo-img');
+                    if (logoLink) logoLink.setAttribute('href', base + 'index.html');
+                    if (logoImg) logoImg.setAttribute('src', base + 'images/logo.png');
+                } catch (_) {}
                 initMobileMenu();
             })
             .catch(error => console.error('Ошибка загрузки header:', error));

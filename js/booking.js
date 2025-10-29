@@ -354,6 +354,12 @@ function cancelBooking() {
         if (form) {
             form.reset();
         }
+
+        // Скрываем сводку бронирования
+        const summary = document.querySelector('.booking-summary');
+        if (summary) {
+            summary.style.display = 'none';
+        }
         
         // Показываем уведомление
         if (typeof travelAgency !== 'undefined' && travelAgency.showNotification) {
