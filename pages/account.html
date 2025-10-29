@@ -8,6 +8,13 @@
     <link rel="stylesheet" href="../css/header.css">
     <link rel="stylesheet" href="../css/footer.css">
     <link rel="stylesheet" href="../css/tours.css">
+    <style>
+      .btn-equal { min-width: 180px; min-height: 40px; display:inline-flex; align-items:center; justify-content:center; }
+      .btn-gap { margin-left: 16px; }
+      .profile-tooltip { position:absolute; top:100%; left:0; margin-top:8px; background:#fff; color:#2c3e50; border-radius:10px; box-shadow:0 10px 20px rgba(0,0,0,.12); padding:12px 14px; width: 320px; opacity:0; transform: translateY(-4px); pointer-events:none; transition: opacity .18s ease, transform .18s ease; z-index:5; }
+      .profile-tooltip.show { opacity:1; transform: translateY(0); pointer-events:auto; }
+      .profile-btn-wrap { position:relative; display:inline-block; }
+    </style>
 </head>
 <body>
     <div id="header"></div>
@@ -17,8 +24,11 @@
             <div class="account-header" style="display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:20px">
                 <p style="margin:0;color:#2c3e50">Пользователь: <strong id="accUser"></strong></p>
                 <div>
-                    <a href="../pages/tours.html" class="btn btn-outline">Каталог туров</a>
-                    <button id="openProfileBtn" class="btn btn-outline">Заполнить профиль</button>
+                    <a href="../pages/tours.html" class="btn btn-outline btn-equal">Каталог туров</a>
+                    <span class="profile-btn-wrap btn-gap">
+                      <button id="openProfileBtn" class="btn btn-outline btn-equal">Заполнить профиль</button>
+                      <div id="profileTooltip" class="profile-tooltip">Эта кнопка открывает форму профиля: ФИО, паспорт, дата рождения и контакты — для автоматического заполнения при бронировании.</div>
+                    </span>
                 </div>
             </div>
 

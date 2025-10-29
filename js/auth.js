@@ -44,11 +44,16 @@ document.addEventListener('DOMContentLoaded', function() {
   const closeBtn = document.getElementById('closeProfileBtn');
   const clearBtn = document.getElementById('clearProfileBtn');
   const form = document.getElementById('profileForm');
+  const tooltip = document.getElementById('profileTooltip');
   if (openBtn && modal) {
     openBtn.addEventListener('click', function(){
       modal.style.display = 'block';
       loadProfileIntoForm();
     });
+    if (tooltip) {
+      openBtn.addEventListener('mouseenter', function(){ tooltip.classList.add('show'); });
+      openBtn.addEventListener('mouseleave', function(){ tooltip.classList.remove('show'); });
+    }
   }
   if (closeBtn && modal) {
     closeBtn.addEventListener('click', function(){ modal.style.display = 'none'; });
