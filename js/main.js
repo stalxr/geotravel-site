@@ -45,21 +45,33 @@ function loadFooter() {
 
 // Корректировка ссылок в header в зависимости от текущей страницы
 function adjustHeaderLinks() {
+    // Проверяем, не была ли функция уже вызвана
+    if (document.querySelector('#header').dataset.adjusted === 'true') {
+        return;
+    }
+    
     const isInPagesFolder = window.location.pathname.includes('/pages/');
     
     if (!isInPagesFolder) {
         // Если мы на главной странице, убираем ../ из всех ссылок
         const links = document.querySelectorAll('#header a[href^="../"]');
         links.forEach(link => {
-            link.href = link.href.replace('../', '');
+            if (link.href.includes('../')) {
+                link.href = link.href.replace('../', '');
+            }
         });
         
         // Корректируем пути к изображениям
         const images = document.querySelectorAll('#header img[src^="../"]');
         images.forEach(img => {
-            img.src = img.src.replace('../', '');
+            if (img.src.includes('../')) {
+                img.src = img.src.replace('../', '');
+            }
         });
     }
+    
+    // Помечаем, что функция уже была вызвана
+    document.querySelector('#header').dataset.adjusted = 'true';
 }
 
 // Мобильное меню
