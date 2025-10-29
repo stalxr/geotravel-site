@@ -342,6 +342,15 @@ function autoFillMainParticipant() {
     const lastName = document.getElementById('lastName');
     const middleName = document.getElementById('middleName');
     const birthDate = document.getElementById('birthDate');
+    // try to also pull passport from saved profile
+    let savedPassport = '';
+    try {
+        const user = localStorage.getItem('gt_current_user');
+        if (user) {
+            const raw = localStorage.getItem(`gt_profile_${user}`);
+            if (raw) savedPassport = (JSON.parse(raw).passport) || '';
+        }
+    } catch(_) {}
     const phone = document.getElementById('phone');
     const email = document.getElementById('email');
     
@@ -351,6 +360,7 @@ function autoFillMainParticipant() {
         const participantLastName = mainParticipant.querySelector('input[name*="[lastName]"]');
         const participantMiddleName = mainParticipant.querySelector('input[name*="[middleName]"]');
         const participantBirthDate = mainParticipant.querySelector('input[name*="[birthDate]"]');
+        const participantPassport = mainParticipant.querySelector('input[name*="[passport]"]');
         
         if (firstName && participantFirstName) {
             participantFirstName.value = firstName.value;
@@ -363,6 +373,9 @@ function autoFillMainParticipant() {
         }
         if (birthDate && participantBirthDate) {
             participantBirthDate.value = birthDate.value;
+        }
+        if (participantPassport && savedPassport) {
+            participantPassport.value = savedPassport;
         }
     }
 }

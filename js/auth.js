@@ -82,8 +82,35 @@ document.addEventListener('DOMContentLoaded', function() {
         email: document.getElementById('pEmail')?.value || ''
       };
       localStorage.setItem(`gt_profile_${user}`, JSON.stringify(profile));
-      try { travelAgency.showNotification('Профиль сохранён. Автозаполнение включено.', 'success'); } catch(_){}
+      try { travelAgency.showNotification('Профиль сохранён. Данные подставятся при бронировании.', 'success'); } catch(_){ }
       loadProfileIntoForm();
+      // Показать краткую подсказку с кнопкой перехода к бронированию
+      try {
+        const tip = document.createElement('div');
+        tip.style.position = 'fixed';
+        tip.style.bottom = '20px';
+        tip.style.right = '20px';
+        tip.style.zIndex = '2001';
+        tip.style.background = '#ffffff';
+        tip.style.border = '2px solid #ff6b35';
+        tip.style.borderRadius = '12px';
+        tip.style.padding = '12px 14px';
+        tip.style.boxShadow = '0 10px 20px rgba(0,0,0,.12)';
+        tip.innerHTML = '<div style="color:#2c3e50;margin-bottom:8px">Профиль сохранён. Хотите перейти к бронированию?</div>' +
+                        '<div style="display:flex;gap:8px;justify-content:flex-end">' +
+                        '<button id="gtTipGo" class="btn">Перейти</button>' +
+                        '<button id="gtTipClose" class="btn btn-outline">Позже</button>' +
+                        '</div>';
+        document.body.appendChild(tip);
+        const close = () => { if (tip && tip.parentNode) tip.parentNode.removeChild(tip); };
+        document.getElementById('gtTipClose').addEventListener('click', close);
+        document.getElementById('gtTipGo').addEventListener('click', function(){
+          const isInPages = window.location.pathname.includes('/pages/');
+          const bookingUrl = isInPages ? 'booking.html' : 'pages/booking.html';
+          window.location.href = bookingUrl;
+        });
+        setTimeout(close, 7000);
+      } catch(_) {}
     });
   }
 });
