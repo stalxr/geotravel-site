@@ -1,0 +1,35 @@
+# Gradle files
+.gradle/
+build/
+gradle/
+gradlew
+gradlew.bat
+gradle.properties
+
+# Android Studio files
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# IDE files
+.vscode/
+*.swp
+*.swo
+*~
+
+# Logs
+*.log
+
+# Temporary files
+*.tmp
+*.temp
