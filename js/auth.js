@@ -52,7 +52,6 @@ document.addEventListener('DOMContentLoaded', function() {
   }
   if (closeBtn && modal) {
     closeBtn.addEventListener('click', function(){ modal.style.display = 'none'; });
-    modal.addEventListener('click', function(e){ if (e.target === modal) modal.style.display = 'none'; });
   }
   if (clearBtn) {
     clearBtn.addEventListener('click', function(){
@@ -79,7 +78,7 @@ document.addEventListener('DOMContentLoaded', function() {
       };
       localStorage.setItem(`gt_profile_${user}`, JSON.stringify(profile));
       try { travelAgency.showNotification('Профиль сохранён. Автозаполнение включено.', 'success'); } catch(_){}
-      modal.style.display = 'none';
+      loadProfileIntoForm();
     });
   }
 });
