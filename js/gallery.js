@@ -13,78 +13,18 @@ function initGalleryPage() {
 
 // Данные галереи
 const galleryData = [
-    {
-        src: '../images/gallery-1.jpg',
-        title: 'Отель Delphin Imperial',
-        description: 'Анталия, Турция',
-        category: 'hotels'
-    },
-    {
-        src: '../images/gallery-2.jpg',
-        title: 'Пляж в Анталии',
-        description: 'Турция',
-        category: 'beaches'
-    },
-    {
-        src: '../images/gallery-3.jpg',
-        title: 'Стамбул',
-        description: 'Турция',
-        category: 'cities'
-    },
-    {
-        src: '../images/gallery-4.jpg',
-        title: 'Каппадокия',
-        description: 'Турция',
-        category: 'nature'
-    },
-    {
-        src: '../images/gallery-5.jpg',
-        title: 'Отель в Хургаде',
-        description: 'Египет',
-        category: 'hotels'
-    },
-    {
-        src: '../images/gallery-6.jpg',
-        title: 'Красное море',
-        description: 'Египет',
-        category: 'beaches'
-    },
-    {
-        src: '../images/gallery-7.jpg',
-        title: 'Каир',
-        description: 'Египет',
-        category: 'cities'
-    },
-    {
-        src: '../images/gallery-8.jpg',
-        title: 'Пирамиды Гизы',
-        description: 'Египет',
-        category: 'nature'
-    },
-    {
-        src: '../images/gallery-9.jpg',
-        title: 'Отель в Тайланде',
-        description: 'Пхукет',
-        category: 'hotels'
-    },
-    {
-        src: '../images/gallery-10.jpg',
-        title: 'Пляж в Тайланде',
-        description: 'Пхукет',
-        category: 'beaches'
-    },
-    {
-        src: '../images/gallery-11.jpg',
-        title: 'Тайская кухня',
-        description: 'Тайланд',
-        category: 'food'
-    },
-    {
-        src: '../images/gallery-12.jpg',
-        title: 'Джунгли Тайланда',
-        description: 'Тайланд',
-        category: 'nature'
-    }
+    { src: 'https://getmecar.ru/wp-content/uploads/2024/02/11-e1651558649220.jpg', title: 'Отель Delphin Imperial', description: 'Анталия, Турция', category: 'hotels' },
+    { src: 'https://avatars.mds.yandex.net/i?id=706c15ff4fe613186f39db881365388b_l-7758910-images-thumbs&n=13', title: 'Пляж в Анталии', description: 'Турция', category: 'beaches' },
+    { src: 'https://inbusiness.kz/uploads/2025-6/v02IfVym.jpg', title: 'Стамбул', description: 'Турция', category: 'cities' },
+    { src: 'https://sun9-40.userapi.com/c604525/v604525628/5a3fa/DFi66xcuVuc.jpg', title: 'Каппадокия', description: 'Турция', category: 'nature' },
+    { src: 'https://avatars.mds.yandex.net/i?id=aba51126b020fb3731fecf9fbe56b3fd_l-8168927-images-thumbs&n=13', title: 'Отель в Хургаде', description: 'Египет', category: 'hotels' },
+    { src: 'https://cdn.fishki.net/upload/post/201401/27/1240358/394645.jpg', title: 'Красное море', description: 'Египет', category: 'beaches' },
+    { src: 'https://images.unsplash.com/photo-1467269204594-9661b134dd2b?w=1200', title: 'Каир', description: 'Египет', category: 'cities' },
+    { src: 'https://images.unsplash.com/photo-1544989164-31dc3c645987?w=1200', title: 'Пирамиды Гизы', description: 'Египет', category: 'nature' },
+    { src: 'https://sun9-85.userapi.com/impf/xGC0HdQyAGxHYmSn37kEBzItLPYfUbN3-uEueA/0I2a3RP_CQM.jpg?size=1920x768&quality=95&crop=0,60,1220,487&sign=e8c48d3696f4621ad6049632cf00851c&type=cover_group', title: 'Отель в Тайланде', description: 'Пхукет', category: 'hotels' },
+    { src: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1200', title: 'Пляж в Тайланде', description: 'Пхукет', category: 'beaches' },
+    { src: 'https://images.unsplash.com/photo-1533089860892-a7c6f0a88666?w=1200', title: 'Тайская кухня', description: 'Тайланд', category: 'food' },
+    { src: 'https://images.unsplash.com/photo-1582562124811-c09040d0fb1a?w=1200', title: 'Джунгли Тайланда', description: 'Тайланд', category: 'nature' }
 ];
 
 let currentImageIndex = 0;
